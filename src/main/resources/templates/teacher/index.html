@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="_layout">
+
+<head>
+    <meta charset="UTF-8">
+    <title>List Teacher</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <h5>
+                List Teacher
+                </h5>
+            </div>
+            <div class="col-md-6">
+                <a class="btn btn-primary float-end" th:href="@{/teachers/create}">Add</a>
+            </div>
+
+        </div>
+        <div class="row">
+            <table class="table table-hover table-ordered">
+                <thead>
+                <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Salary</th>
+                <th>Status</th>
+                <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="teacher :${teachers}">
+                    <td th:text="${teacher.getId()}"></td>
+                    <td th:text="${teacher.getName()}"></td>
+                    <td>
+                        <span th:if="${teacher.position != null}">
+                            <span th:text="${teacher.position.getName()}"></span>
+                        </span>
+                    </td>
+                    <td th:text="${teacher.getSalary()}"></td>
+                    <td>
+                        <span th:if="${teacher.getStatus()=='ACT'}" style="color: #0a53be">Active</span>
+                        <span th:if="${teacher.getStatus()=='DEL'}" style="color: #ee223f">Deleted</span>
+                    </td>
+                    <td>
+                        <a th:href="@{/teachers/edit/{id}(id=${teacher.getId()})}" class="btn btn-success">Edit</a>
+                        <a th:href="@{/teachers/delete/{id}(id=${teacher.getId()})}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+
+</body>
+</html>

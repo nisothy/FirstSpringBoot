@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="_layout">
+
+<head>
+    <meta charset="UTF-8">
+    <title>List Teacher</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <h5 th:if="${teacher.id==0}">
+                    Create Teacher
+                </h5>
+                <h5 th:if="${teacher.id!=0}">
+                    Update Teacher
+                </h5>
+            </div>
+            <div class="col-md-6">
+                <a class="btn btn-primary float-end" th:href="@{/teachers}">Back</a>
+            </div>
+
+        </div>
+        <div class="row">
+            <form th:action="@{/teachers/create}" method="post" th:object="${teacher}">
+                <div class="mb-3">
+                    <input th:field="*{id}"  hidden>
+                    <label class="form-label">Teacher Name</label>
+                    <input th:field="*{name}" type="text" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Salary</label>
+                    <input th:field="*{salary}" type="text" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Select Position</label>
+                    <select class="form-control" th:field="*{position}">
+                        <option class="form-control" th:each="position :${positions}"
+                                th:value="${position.getId()}"
+                                th:text="${position.getName()}">
+                        </option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Select Status</label>
+                    <select class="form-control" th:field="*{status}">
+                        <option class="form-control" th:each="status :${ListStatus}"
+                                th:value="${status.getKey()}"
+                                th:text="${status.getValue()}">
+                        </option>
+                    </select>
+                </div>
+                <button th:if="${teacher.id==0}" type="submit" class="btn btn-primary">Create</button>
+                <button th:if="${teacher.id!=0}" type="submit" class="btn btn-primary">Update </button>
+            </form>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+
+</body>
+</html>
